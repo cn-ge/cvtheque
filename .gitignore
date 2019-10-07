@@ -1,0 +1,14 @@
+
+###> symfony/framework-bundle ###
+/sf4/.env.local
+/sf4/.env.local.php
+/sf4/.env.*.local
+/sf4/public/bundles/
+/sf4/var/
+/sf4/vendor/
+###< symfony/framework-bundle ###
+
+/old
+/sf4.zip
+/.docker/.DS_Store
+/.docker/config/.DS_Store
