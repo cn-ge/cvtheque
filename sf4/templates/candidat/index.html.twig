@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block title %}Candidats{% endblock %}
+{% block body %}
+<div class="jumbotron text-center">
+
+    <h1>Bienvenue sur la page des Candidats</h1>
+
+</div>
+<div class="container">
+
+    <ul>
+        {% for candidat in candidats %}
+        <li>{{ candidat.stringCivilite }} {{ candidat.prenom }} {{ candidat.nom }} </li>
+        {% endfor %}
+    </ul>
+
+</div>
+{% endblock %}

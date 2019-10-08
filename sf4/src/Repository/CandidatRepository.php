@@ -1,0 +1,89 @@
+<?php
+
+namespace App\Repository;
+
+use App\Entity\Candidat;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
+
+/**
+ * @method Candidat|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Candidat|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Candidat[]    findAll()
+ * @method Candidat[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+class CandidatRepository extends ServiceEntityRepository
+{
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Candidat::class);
+    }
+
+    /**
+     * @return Candidat[] <tableau des candidats>
+     */
+    public function findAllByNom($value) : array {
+        return $this->getQuery()
+            ->andWhere('c.nom = :nom')
+            ->setParameter('nom', $value)
+            ->orderBy('c.prenom', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findLatest() : array {
+        return $this->getQuery()
+            ->orderBy('c.date_creation', 'DESC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult();
+    }
+
+    private function update($id): bool {
+        return false;
+    }
+
+    private function insert($candidat) : bool {
+        return false;
+    }
+
+    private function delete($id) : bool {
+        return false;
+    }
+
+
+    private function getQuery(): QueryBuilder {
+        return $this->createQueryBuilder('c');
+    }
+
+    // /**
+    //  * @return Candidat[] Returns an array of Candidat objects
+    //  */
+    /*
+    public function findByExampleField($value)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('c.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    */
+
+    /*
+    public function findOneBySomeField($value): ?Candidat
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.exampleField = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+    */
+}

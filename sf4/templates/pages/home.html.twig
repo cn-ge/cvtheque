@@ -1,10 +1,37 @@
 {% extends 'base.html.twig' %}
+{% block title %}Wemoov{% endblock %}
 {% block body %}
+
 <div class="jumbotron text-center">
-    <h1>Bienvenue sur la Home Page</h1>
-    <p>bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla </p>
+    <h1>Bienvenue sur la CVThèque de Wemoov</h1>
 </div>
 
-        <div class="container">
-        </div>
+<div class="container">
+    <h2>Les derniers candidats</h2>
+    <div class="row flex">
+
+        {% for candidat in candidats %}
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {# {% if candidat.civilite > 0 %}
+                        <img src="{{ path }}/templates/images/man.png" /> 
+                        {% else %}
+                        <img src="{{ path }}/templates/images/woman.png" /> 
+                        {% endif %} #}
+                        <a href="{{ path('candidat.show', {id: candidat.id, slug: candidat.slug}) }}">{{ candidat.prenom }} {{ candidat.nom }}</a>
+                    </h5>
+                    <p class="card-text">{{ candidat.ville }} ({{ candidat.cp }})</p>
+                    <div class="text-primary">{{ candidat.posteVise }}</div>
+                    <p class="text-muted" style="font-size:10px">{{ candidat.formattedDateCreation }}</p>
+
+                </div>
+            </div>
+        </div> 
+        {% endfor %}
+
+
+    </div>
+</div>
 {% endblock %}
