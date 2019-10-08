@@ -1,17 +1,14 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\humanRessources;
 
+use App\Repository\CandidatRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController{
-
-    private $current_menu = null;
-    private $current_user = null;
-    private $current_role = null;
 
     /**
      * @var Environnement
@@ -28,8 +25,9 @@ class HomeController extends AbstractController{
      * @Route("/", name="home")
      * @return Response
      */
-    public function index (): Response {
-        return new Response($this->twig->render('common/home.html.twig', ['role' => $this->current_role]));
+    public function index (CandidatRepository $repo): Response {
+        $candidats = $repo->findLatest();
+        return new Response($this->twig->render('home/home.html.twig', ['candidats' => $candidats]));
         // return new Response('test');
     }
 }

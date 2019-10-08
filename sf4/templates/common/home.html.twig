@@ -1,14 +1,26 @@
+
 {% extends 'base.html.twig' %}
-{% block title %}Wemoov{% endblock %}
+{% block title %}Wemoov - CVthèque{% endblock %}
 {% block body %}
+
+
+
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a class="nav-link {% if (current_menu is defined) and (current_menu  == 'candidat') %} active {% endif %}" href="{{ path('admin.candidat.index')}}">Candidats<span class="sr-only">(current)</span></a>
+        </li>
+    </ul>
+</div>
+</nav>
+
 
 <div class="jumbotron text-center">
     <h1>Bienvenue sur la CVThèque de Wemoov</h1>
 </div>
 
 <div class="container">
-    <h2>Les derniers candidats</h2>
-    <div class="row flex">
+    <h2>Les derniers candidats</h2>A
 
         {% for candidat in candidats %}
         <div class="col-4">
@@ -20,9 +32,9 @@
                         {% else %}
                         <img src="{{ path }}/templates/images/woman.png" /> 
                         {% endif %} #}
-                        <a href="{{ path('candidat.show', {id: candidat.id, slug: candidat.slug}) }}">{{ candidat.prenom }} {{ candidat.nom }}</a>
+                        {# <a href="{{ path('candidat.show', {id: candidat.id, slug: candidat.slug}) }}">{{ candidat.prenom }} {{ candidat.nom }}</a> #}
                     </h5>
-                    <p class="card-text">{{ candidat.ville }} ({{ candidat.cp }})</p>
+                    {# <p class="card-text">{{ candidat.ville }} ({{ candidat.cp }})</p> #}
                     <div class="text-primary">{{ candidat.posteVise }}</div>
                     <p class="text-muted" style="font-size:10px">{{ candidat.formattedDateCreation }}</p>
 

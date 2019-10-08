@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{candidat.slug}}{% endblock %}
+{% block body %}
+<div class="container mt-4">
+
+    <h1>Modifier le profil du candidat</h1>
+    <table class="table table-stripped">
+        <thead>
+            <tr>
+                <th>Candidats</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for candidat in candidats %}
+            <tr>
+                <td>{{ candidat.nom }} {{ candidat.prenom }}</td>
+                <td>
+                <a class="btn btn-default" href="{{ path('admin.candidat.edit', {"slug": candidat.slug, "id": candidat.id})}}" role="button">Editer</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}
