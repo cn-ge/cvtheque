@@ -4,6 +4,11 @@
 <div class="container mt-4">
 
     <h1>Gérer les Candidats</h1>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+    
     <table class="table table-stripped">
         <thead>
             <tr>
@@ -17,6 +22,11 @@
                 <td>{{ candidat.nom }} {{ candidat.prenom }}</td>
                 <td>
                     <a class="btn btn-primary" href="{{ path('hr.candidat.edit', {slug: candidat.slug, id: candidat.id, current_role:'hr', current_menu:'candidat'})}}" role="button">Editer</a>
+                    <form style="display: inline-block" method="post" onsubmit="return confirm('Confirmez-vous la suppression du candidat ?')" action="{{ path('hr.candidat.delete', {id: candidat.id, current_role:'hr', current_menu:'candidat'})}}">
+                        <input type="hidden" name="_method" value="DELETE" />
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ candidat.id)}}" />
+                        <button type="submit" class="btn btn-primary" >Supprimer</button>
+                    </form>
                 </td>
             </tr>
             {% endfor %}

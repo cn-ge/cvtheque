@@ -26,7 +26,6 @@ class CandidatController  extends AbstractController {
         $this->em = $em;
     }
 
-
     /**
      * @Route("/human-ressources/candidats", name="hr.candidat.list")
      * @return Response
@@ -34,15 +33,13 @@ class CandidatController  extends AbstractController {
     public function index(): Response {
         $candidats = $this->repo->findAll();
         return $this->render('humanRessources/candidat/list.html.twig', ['candidats' => $candidats, 'current_menu' => $this->current_menu, 'current_role' => $this->current_role]);
-
     }
-
 
     /**
      * @Route("/human-ressources/candidat/show/{slug}-{id}", name="hr.candidat.show", requirements={"slug": "[a-z0-9\-]*"})
      * @return Response
      */
-    public function show (Candidat $candidat, string $slug) : Response {
+    public function show(Candidat $candidat, string $slug) : Response {
         $candidatSlug = $candidat->getSlug();
         if ($candidatSlug !== $slug) {
             return $this->redirectToRoute('hr.candidat.show', ["slug" => $candidatSlug, "id" => $candidat->getId()], 301);
@@ -51,7 +48,7 @@ class CandidatController  extends AbstractController {
     }
 
     /**
-     * @Route("/human-ressources/candidat/edit/{slug}-{id}", name="hr.candidat.edit", requirements={"slug": "[a-z0-9\-]*"})
+     * @Route("/human-ressources/candidat/edit/{slug}-{id}", name="hr.candidat.edit", requirements={"slug": "[a-z0-9\-]*"}, methods="GET|POST")
      * @return Response
      */
     public function edit(Candidat $candidat, string $slug, Request $request): Response {
@@ -65,11 +62,13 @@ class CandidatController  extends AbstractController {
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
-            return $this->render('humanRessources/candidat/show.html.twig', ['slug' => $candidat->getSlug(), 'id' => $candidat->getId(), 'candidat' => $candidat, 'current_menu' => $this->current_menu, 'current_role' => $this->current_role]);
+            $this->addFlash("success", 'Candidat modifié avec succès !');
+            return $this->redirectToRoute('hr.candidat.list', ['current_menu' => $this->current_menu, 'current_role' => $this->current_role]);
         }
         return $this->render('humanRessources/candidat/edit.html.twig', ['candidat' => $candidat, 'form' => $form->createView(), 'current_menu' => $this->current_menu, 'current_role' => $this->current_role]);
 
     }
+
     /**
      * @Route("/human-ressources/candidat/add", name="hr.candidat.add")
      * @return Response
@@ -81,9 +80,23 @@ class CandidatController  extends AbstractController {
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->persist($candidat);
             $this->em->flush();
-            return $this->render('humanRessources/candidat/show.html.twig', ['candidat' => $candidat, 'form' => $form->createView(), 'current_menu' => $this->current_menu, 'current_role' => $this->current_role]);
+            $this->addFlash("success", 'Candidat créé avec succès !');
+            return $this->redirectToRoute('hr.candidat.list', ['current_menu' => $this->current_menu, 'current_role' => $this->current_role]);
         }
         return $this->render('humanRessources/candidat/add.html.twig', ['candidat' => $candidat, 'form' => $form->createView(), 'current_menu' => $this->current_menu, 'current_role' => $this->current_role]);
+    }
+
+    /**
+     * @Route("/human-ressources/candidat/delete/{id}", name="hr.candidat.delete", methods="DELETE")
+     * @return Response
+     */
+    public function delete(Candidat $candidat, Request $request): Response {
+        if ($this->isCsrfTokenValid('delete' . $candidat->getId(), $request->get('_token'))) {
+            $this->em->remove($candidat);
+            $this->em->flush();
+            $this->addFlash("success", 'Candidat supprimé !');
+        }
+        return $this->redirectToRoute('hr.candidat.list', ['current_menu' => $this->current_menu, 'current_role' => $this->current_role]);
     }
 }
 

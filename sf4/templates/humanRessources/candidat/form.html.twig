@@ -34,4 +34,6 @@
         </div>
         {{ form_widget(form) }}
         <button type="submit" class="btn btn-primary">Sauvegarder</button>
+        <a class="btn btn-primary" href="{{ path('hr.candidat.list', {current_role:'hr', current_menu:'candidat'})}}" role="button">Annuler</a>
     {{ form_end(form) }}
+

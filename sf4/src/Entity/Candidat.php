@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CandidatRepository")
@@ -38,11 +40,15 @@ class Candidat
 
     /**
      * @ORM\Column(type="string", length=20)
+     * @Assert\Regex("/^[0-9]{10}$/")
      */
     private $telephone;
 
     /**
      * @ORM\Column(type="string", length=120, unique=true)
+     * @Assert\Email(
+     *     message = "L'email '{{ value }}' n'est pas valide.",
+     * )
      */
     private $email;
 
@@ -57,7 +63,8 @@ class Candidat
     private $date_creation;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=5)
+     * @Assert\Regex("/^[0-9]{5}$/")
      */
     private $cp;
 
@@ -68,6 +75,7 @@ class Candidat
 
     /**
      * @ORM\Column(type="string", length=120)
+     * @Assert\Length(min=5, max=120)
      */
     private $poste_vise;
 
@@ -77,12 +85,8 @@ class Candidat
     private $date_naissance;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $nb_annee_experience;
-
-    /**
      * @ORM\Column(type="string", length=120)
+     * @Assert\Length(min=5, max=120)
      */
     private $titre;
 
@@ -92,22 +96,26 @@ class Candidat
     private $mobilite;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=120, nullable=true)
+     * @Assert\Length(min=5, max=120)
      */
     private $mobilite_zone;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=120)
+     * @Assert\Length(min=5, max=120)
      */
     private $adresse_1;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=120, nullable=true)
+     * @Assert\Length(min=5, max=120)
      */
     private $adresse_2;
 
     /**
      * @ORM\Column(type="blob", nullable=true)
+     * @Assert\Length(min=10)
      */
     private $notes;
 
@@ -146,7 +154,6 @@ class Candidat
         $prenom = str_ireplace('-', ' ', $prenom);
         $prenom = str_ireplace('  ', ' ', $prenom);
         $this->prenom = ucwords(strtolower(trim($prenom)));
-
         return $this;
     }
 
@@ -158,7 +165,6 @@ class Candidat
     public function setTelephone(string $telephone): self
     {
         $this->telephone = trim($telephone);
-
         return $this;
     }
 
@@ -170,7 +176,6 @@ class Candidat
     public function setEmail(string $email): self
     {
         $this->email = strtolower(trim($email));
-
         return $this;
     }
 
@@ -182,7 +187,6 @@ class Candidat
     public function setCivilite(int $civilite): self
     {
         $this->civilite = $civilite;
-
         return $this;
     }
 
@@ -198,19 +202,17 @@ class Candidat
     public function setDateCreation(\DateTimeInterface $date_creation): self
     {
         $this->date_creation = $date_creation;
-
         return $this;
     }
 
-    public function getCp(): ?int
+    public function getCp(): ?string
     {
         return $this->cp;
     }
 
-    public function setCp(int $cp): self
+    public function setCp(string $cp): self
     {
-        $this->cp = trim($cp);
-
+        $this->cp = $cp;
         return $this;
     }
 
@@ -222,7 +224,6 @@ class Candidat
     public function setVille(string $ville): self
     {
         $this->ville = strtoupper(trim($ville));
-
         return $this;
     }
 
@@ -234,7 +235,6 @@ class Candidat
     public function setPosteVise(string $poste_vise): self
     {
         $this->poste_vise = mb_strtoupper(trim($poste_vise));
-
         return $this;
     }
 
@@ -251,19 +251,6 @@ class Candidat
     public function setDateNaissance(\DateTimeInterface $date_naissance): self
     {
         $this->date_naissance = $date_naissance;
-
-        return $this;
-    }
-
-    public function getNbAnneeExperience(): ?int
-    {
-        return $this->nb_annee_experience;
-    }
-
-    public function setNbAnneeExperience(?int $nb_annee_experience): self
-    {
-        $this->nb_annee_experience = $nb_annee_experience;
-
         return $this;
     }
 
@@ -275,7 +262,6 @@ class Candidat
     public function setTitre(string $titre): self
     {
         $this->titre = trim($titre);
-
         return $this;
     }
 
@@ -287,7 +273,6 @@ class Candidat
     public function setMobilite(bool $mobilite): self
     {
         $this->mobilite = $mobilite;
-
         return $this;
     }
 
@@ -299,7 +284,6 @@ class Candidat
     public function setMobiliteZone(string $mobilite_zone): self
     {
         $this->mobilite_zone = $mobilite_zone;
-
         return $this;
     }
 
@@ -311,7 +295,6 @@ class Candidat
     public function setAdresse1(string $adresse_1): self
     {
         $this->adresse_1 = $adresse_1;
-
         return $this;
     }
 
@@ -323,7 +306,6 @@ class Candidat
     public function setAdresse2(string $adresse_2): self
     {
         $this->adresse_2 = $adresse_2;
-
         return $this;
     }
 
@@ -335,7 +317,6 @@ class Candidat
     public function setNotes($notes): self
     {
         $this->notes = $notes;
-
         return $this;
     }
 
