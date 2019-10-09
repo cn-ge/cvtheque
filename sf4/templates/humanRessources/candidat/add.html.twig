@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
-{% block title %}{{candidat.slug}}{% endblock %}
+{% block title %}Candidat{% endblock %}
 {% block body %}
 <div class="container mt-4">
 
-    <h1>Modifier le profil de {{ candidat.prenom }} {{ candidat.nom }}</h1>
+    <h1>Nouveau candidat</h1>
     
     {{ include('humanRessources/candidat/form.html.twig', {form: form}) }}
 

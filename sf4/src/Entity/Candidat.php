@@ -86,6 +86,31 @@ class Candidat
      */
     private $titre;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     */
+    private $mobilite;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $mobilite_zone;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $adresse_1;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $adresse_2;
+
+    /**
+     * @ORM\Column(type="blob", nullable=true)
+     */
+    private $notes;
+
 
     function __construct()
     {
@@ -152,11 +177,6 @@ class Candidat
     public function getCivilite(): ?int
     {
         return $this->civilite;
-    }
-
-    public function getStringCivilite(): string
-    {
-        return self::CIVILITE[$this->civilite];
     }
 
     public function setCivilite(int $civilite): self
@@ -255,6 +275,66 @@ class Candidat
     public function setTitre(string $titre): self
     {
         $this->titre = trim($titre);
+
+        return $this;
+    }
+
+    public function getMobilite(): ?bool
+    {
+        return $this->mobilite;
+    }
+
+    public function setMobilite(bool $mobilite): self
+    {
+        $this->mobilite = $mobilite;
+
+        return $this;
+    }
+
+    public function getMobiliteZone(): ?string
+    {
+        return $this->mobilite_zone;
+    }
+
+    public function setMobiliteZone(string $mobilite_zone): self
+    {
+        $this->mobilite_zone = $mobilite_zone;
+
+        return $this;
+    }
+
+    public function getAdresse1(): ?string
+    {
+        return $this->adresse_1;
+    }
+
+    public function setAdresse1(string $adresse_1): self
+    {
+        $this->adresse_1 = $adresse_1;
+
+        return $this;
+    }
+
+    public function getAdresse2(): ?string
+    {
+        return $this->adresse_2;
+    }
+
+    public function setAdresse2(string $adresse_2): self
+    {
+        $this->adresse_2 = $adresse_2;
+
+        return $this;
+    }
+
+    public function getNotes()
+    {
+        return $this->notes;
+    }
+
+    public function setNotes($notes): self
+    {
+        $this->notes = $notes;
 
         return $this;
     }

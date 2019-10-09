@@ -7,13 +7,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Candidat;
+use App\Form\CandidatType;
 use App\Repository\CandidatRepository;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\HttpFoundation\Request;
 
 class CandidatController  extends AbstractController {
 
     private $current_menu = 'candidat';
-    private $current_user = 'rh';
+    private $current_role = 'hr';
     private $repo;
     private $em;
 
@@ -26,36 +28,62 @@ class CandidatController  extends AbstractController {
 
 
     /**
-     * @Route("/admin/candidat", name="admin.candidat.index")
+     * @Route("/human-ressources/candidats", name="hr.candidat.list")
      * @return Response
      */
     public function index(): Response {
         $candidats = $this->repo->findAll();
-        return $this->render('admin/candidat/index.html.twig', ['candidats' => compact($candidats), 'current_menu' => 'candidat']);
-
-    }
-    /**
-     * @Route("/rh/candidat/{slug}-{id}", name="rh.candidat.edit", requirements={"slug": "[a-z0-9\-]*"})
-     * @return Response
-     */
-    public function edit(Candidat $candidat, string $slug): Response {
-        return $this->render('admin/candidat/edit.html.twig', compact($candidat));
+        return $this->render('humanRessources/candidat/list.html.twig', ['candidats' => $candidats, 'current_menu' => $this->current_menu, 'current_role' => $this->current_role]);
 
     }
 
 
     /**
-     * @Route("/rh/candidat/{slug}-{id}", name="rh.candidat.show", requirements={"slug": "[a-z0-9\-]*"})
+     * @Route("/human-ressources/candidat/show/{slug}-{id}", name="hr.candidat.show", requirements={"slug": "[a-z0-9\-]*"})
      * @return Response
      */
-    // public function show($slug, $id): Response {
-        // $candidat = $this->repo->find($id);
-        public function show (Candidat $candidat, string $slug) : Response {
-            $candidatSlug = $candidat->getSlug();
-            if ($candidatSlug !== $slug) {
-                return $this->redirectToRoute('candidat.show', ["slug" => $candidatSlug, "id" => $candidat->getId()], 301);
-            } 
-            return $this->render('candidat/show.html.twig', ['current_menu' => $this->current_menu, 'candidat' => $candidat]);
+    public function show (Candidat $candidat, string $slug) : Response {
+        $candidatSlug = $candidat->getSlug();
+        if ($candidatSlug !== $slug) {
+            return $this->redirectToRoute('hr.candidat.show', ["slug" => $candidatSlug, "id" => $candidat->getId()], 301);
+        } 
+        return $this->render('humanRessources/candidat/show.html.twig', ['current_menu' => $this->current_menu, 'current_role' => $this->current_role, 'candidat' => $candidat]);
+    }
+
+    /**
+     * @Route("/human-ressources/candidat/edit/{slug}-{id}", name="hr.candidat.edit", requirements={"slug": "[a-z0-9\-]*"})
+     * @return Response
+     */
+    public function edit(Candidat $candidat, string $slug, Request $request): Response {
+        $candidatSlug = $candidat->getSlug();
+        if ($candidatSlug !== $slug) {
+            return $this->redirectToRoute('hr.candidat.edit', ["slug" => $candidatSlug, "id" => $candidat->getId()], 301);
+        } 
+        $form = $this->createForm(CandidatType::class, $candidat);
+        $form->handleRequest($request);
+        // return new Response('<html>'. $request .'</html>');
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->flush();
+            return $this->render('humanRessources/candidat/show.html.twig', ['slug' => $candidat->getSlug(), 'id' => $candidat->getId(), 'candidat' => $candidat, 'current_menu' => $this->current_menu, 'current_role' => $this->current_role]);
         }
+        return $this->render('humanRessources/candidat/edit.html.twig', ['candidat' => $candidat, 'form' => $form->createView(), 'current_menu' => $this->current_menu, 'current_role' => $this->current_role]);
+
+    }
+    /**
+     * @Route("/human-ressources/candidat/add", name="hr.candidat.add")
+     * @return Response
+     */
+    public function add(Request $request): Response {
+        $candidat = new Candidat();
+        $form = $this->createForm(CandidatType::class, $candidat);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($candidat);
+            $this->em->flush();
+            return $this->render('humanRessources/candidat/show.html.twig', ['candidat' => $candidat, 'form' => $form->createView(), 'current_menu' => $this->current_menu, 'current_role' => $this->current_role]);
+        }
+        return $this->render('humanRessources/candidat/add.html.twig', ['candidat' => $candidat, 'form' => $form->createView(), 'current_menu' => $this->current_menu, 'current_role' => $this->current_role]);
+    }
 }
 

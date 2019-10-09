@@ -14,18 +14,11 @@
         </div>
         <div class="col-md-4">
             <h1>{{ candidat.prenom }} {{ candidat.nom }}</h1>
-            <h3>Poste : {{ candidat.posteVise }}</h3>
-            <h3>Adresse : {{ candidat.ville }} ({{candidat.cp}})</h3>
-            <a href="#">Modifier</a>
+            <h3>Recherche : {{ candidat.posteVise }}</h3>
+            <h3>Zone géographique : {{ candidat.mobiliteZone }}</h3>
+            <a href="{{ path('hr.candidat.edit', {slug: candidat.slug, id: candidat.id, current_role: 'hr', current_menu: 'candidat'}) }}">Modifier</a>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-8">
-        </div>
-        <div class="col-md-4">
-        </div>
-    </div>
-
 
 
 </div>

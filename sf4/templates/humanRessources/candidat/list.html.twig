@@ -12,16 +12,16 @@
             </tr>
         </thead>
         <tbody>
-        {% for candidat in candidats %}
+            {% for candidat in candidats %}
             <tr>
                 <td>{{ candidat.nom }} {{ candidat.prenom }}</td>
                 <td>
-                <a class="btn btn-default" href="{{ path('admin.candidat.edit', {slug: candidat.slug, id: candidat.id})}}" role="button">Editer</a>
+                    <a class="btn btn-primary" href="{{ path('hr.candidat.edit', {slug: candidat.slug, id: candidat.id, current_role:'hr', current_menu:'candidat'})}}" role="button">Editer</a>
                 </td>
             </tr>
-        {% endfor %}
+            {% endfor %}
         </tbody>
     </table>
-
+    <a class="btn btn-primary" href="{{ path('hr.candidat.add', {current_role:'hr', current_menu:'candidat'})}}" role="button">Ajouter un candidat</a>
 </div>
 {% endblock %}

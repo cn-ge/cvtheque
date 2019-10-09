@@ -29,7 +29,6 @@ class HomeController extends AbstractController{
      * @return Response
      */
     public function index (): Response {
-        return new Response($this->twig->render('common/home.html.twig', ['role' => $this->current_role]));
-        // return new Response('test');
+        return new Response($this->twig->render('common/home.html.twig'));
     }
 }

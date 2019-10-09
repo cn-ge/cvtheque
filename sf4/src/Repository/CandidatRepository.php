@@ -23,6 +23,15 @@ class CandidatRepository extends ServiceEntityRepository
     /**
      * @return Candidat[] <tableau des candidats>
      */
+    public function findAll() : array {
+        return $this->getQuery()
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Candidat[] <tableau des candidats>
+     */
     public function findAllByNom($value) : array {
         return $this->getQuery()
             ->andWhere('c.nom = :nom')
@@ -32,7 +41,6 @@ class CandidatRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
     public function findLatest() : array {
         return $this->getQuery()
             ->orderBy('c.date_creation', 'DESC')

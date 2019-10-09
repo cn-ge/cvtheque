@@ -10,6 +10,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController{
 
+
+    private $current_menu = 'home';
+    private $current_role = 'hr';
+
     /**
      * @var Environnement
      * Variable de type service
@@ -22,12 +26,11 @@ class HomeController extends AbstractController{
     }
 
     /**
-     * @Route("/", name="home")
+     * @Route("/human-ressources/", name="hr.home")
      * @return Response
      */
     public function index (CandidatRepository $repo): Response {
         $candidats = $repo->findLatest();
-        return new Response($this->twig->render('home/home.html.twig', ['candidats' => $candidats]));
-        // return new Response('test');
+        return new Response($this->twig->render('humanRessources/home.html.twig', ['candidats' => $candidats, 'current_menu' => $this->current_menu, 'current_role' => $this->current_role]));
     }
 }
