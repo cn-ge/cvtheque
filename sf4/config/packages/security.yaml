@@ -1,52 +1,51 @@
 security:
+   # encoder
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+            cost: 12
+
+   
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        # in_memory: { memory: null }
-        # in_memory: 
-        #     memory:
-        #         users:
-        #             admin: 
-        #                 password: admin
-        #                 roles: ROLE_ADMIN
-        #             hr: 
-        #                 password: hr
-        #                 roles: ROLE_HR
-        from_database:
-            entity: 
+        our_db_provider:
+            entity:
                 class: App\Entity\User
-                property: username
+                property: email
+       
+    # providers:
+    #     from_database:
+    #         entity: 
+    #             class: App\Entity\User
+    #             property: username
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            # anonymous: true
-
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#firewalls-authentication
-            # http_basic: true
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
-
-            logout: 
-                path: /logout
-                target: /login
-
-            form_login: 
-                check_path: /
+            pattern:   ^/
+            http_basic: ~
+            provider: our_db_provider
+            anonymous: ~
+            form_login:
+                login_path: login
+                check_path: login
+                default_target_path: home
+                csrf_token_generator: security.csrf.token_manager
+            logout:
+                path:  logout
+                target: login
+      
+    role_hierarchy:
+        ROLE_ADMIN:      ROLE_USER
+        #ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/candidat, roles: ROLE_USER }
         - { path: ^/hr, roles: ROLE_HR }
-        - { path: ^/admin, roles: ROLE_ADMIN }
-
-    encoders:
-        # App\Entity\User: plaintext
-        App\Entity\User:
-            algorithm: bcrypt
-            cost: 12
+        
+        
+        

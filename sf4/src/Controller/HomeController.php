@@ -29,6 +29,10 @@ class HomeController extends AbstractController{
      * @return Response
      */
     public function index (): Response {
-        return new Response($this->twig->render('common/home.html.twig'));
+        if ($this->getUser() != null) {
+            $roles = $this->getUser()->getRoles();
+            return new Response('<html>user role</html>');
+        }
+        return $this->redirect('/login');
     }
 }

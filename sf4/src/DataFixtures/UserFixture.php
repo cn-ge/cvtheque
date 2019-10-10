@@ -18,29 +18,30 @@ class UserFixture extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        // $product = new Product();
-        // $manager->persist($product);
         $user = new User();
-        $user->setUsername('user');
+        $user->setEmail('user@user.fr');
         $user->setPassword($this->encoder->encodePassword($user, 'user'));
-        $user->setRoles(['ROLE_USER']);
+        $user->setIsActive(1);
+        $user->addRole(['ROLE_USER']);
         $manager->persist($user);
         $manager->flush();
         $manager->clear(User::class);
 
-        $rh = new User();
-        $rh->setUsername('hr');
-        $rh->setPassword($this->encoder->encodePassword($rh, 'hr'));
-        $rh->setRoles(['ROLE_HR']);
-        $manager->persist($rh);
+        $admin = new User();
+        $admin->setEmail('admin@admin.fr');
+        $admin->setPassword($this->encoder->encodePassword($admin, 'admin'));
+        $admin->setIsActive(1);
+        $admin->addRole(['ROLE_ADMIN']);
+        $manager->persist($admin);
         $manager->flush();
         $manager->clear(User::class);
 
-        $admin = new User();
-        $admin->setUsername('admin');
-        $admin->setPassword($this->encoder->encodePassword($admin, 'admin'));
-        $admin->setRoles(['ROLE_USER', 'ROLE_HR', 'ROLE_ADMIN']);
-        $manager->persist($admin);
+        $hr = new User();
+        $hr->setEmail('rh@rh.fr');
+        $hr->setPassword($this->encoder->encodePassword($hr, 'rh'));
+        $hr->setIsActive(1);
+        $hr->addRole(['ROLE_HR']);
+        $manager->persist($hr);
         $manager->flush();
         $manager->clear(User::class);
     }
