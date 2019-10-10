@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\humanRessources;
+namespace App\Controller\hr;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,10 +24,11 @@ class CandidatController  extends AbstractController {
     {
         $this->repo = $repo;
         $this->em = $em;
+        $this->denyAccessUnlessGranted('ROLE_HR');
     }
 
     /**
-     * @Route("/human-ressources/candidats", name="hr.candidat.list")
+     * @Route("/hr/candidats", name="hr.candidat.list")
      * @return Response
      */
     public function index(): Response {
@@ -36,7 +37,7 @@ class CandidatController  extends AbstractController {
     }
 
     /**
-     * @Route("/human-ressources/candidat/show/{slug}-{id}", name="hr.candidat.show", requirements={"slug": "[a-z0-9\-]*"})
+     * @Route("/hr/candidat/show/{slug}-{id}", name="hr.candidat.show", requirements={"slug": "[a-z0-9\-]*"})
      * @return Response
      */
     public function show(Candidat $candidat, string $slug) : Response {
@@ -48,7 +49,7 @@ class CandidatController  extends AbstractController {
     }
 
     /**
-     * @Route("/human-ressources/candidat/edit/{slug}-{id}", name="hr.candidat.edit", requirements={"slug": "[a-z0-9\-]*"}, methods="GET|POST")
+     * @Route("/hr/candidat/edit/{slug}-{id}", name="hr.candidat.edit", requirements={"slug": "[a-z0-9\-]*"}, methods="GET|POST")
      * @return Response
      */
     public function edit(Candidat $candidat, string $slug, Request $request): Response {
@@ -70,7 +71,7 @@ class CandidatController  extends AbstractController {
     }
 
     /**
-     * @Route("/human-ressources/candidat/add", name="hr.candidat.add")
+     * @Route("/hr/candidat/add", name="hr.candidat.add")
      * @return Response
      */
     public function add(Request $request): Response {
@@ -87,7 +88,7 @@ class CandidatController  extends AbstractController {
     }
 
     /**
-     * @Route("/human-ressources/candidat/delete/{id}", name="hr.candidat.delete", methods="DELETE")
+     * @Route("/hr/candidat/delete/{id}", name="hr.candidat.delete", methods="DELETE")
      * @return Response
      */
     public function delete(Candidat $candidat, Request $request): Response {

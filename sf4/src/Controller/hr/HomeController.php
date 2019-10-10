@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\humanRessources;
+namespace App\Controller\hr;
 
 use App\Repository\CandidatRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,10 +23,11 @@ class HomeController extends AbstractController{
     public function __construct(Environment $twig)
     {
         $this->twig = $twig;
+        $this->denyAccessUnlessGranted('ROLE_HR');
     }
 
     /**
-     * @Route("/human-ressources/", name="hr.home")
+     * @Route("/hr/", name="hr.home")
      * @return Response
      */
     public function index (CandidatRepository $repo): Response {
