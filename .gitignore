@@ -1,5 +1,6 @@
 
 ###> symfony/framework-bundle ###
+/sf4/.env
 /sf4/.env.local
 /sf4/.env.local.php
 /sf4/.env.*.local
