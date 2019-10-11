@@ -13,3 +13,7 @@
 /sf4.zip
 /.docker/.DS_Store
 /.docker/config/.DS_Store
+
+
+### REACT ###
+/react/node_modules/*
