@@ -26,7 +26,7 @@ class HomeController extends AbstractController{
     }
 
     /**
-     * @Route("/human-ressources/", name="hr.home")
+     * @Route("/human-ressources", name="hr.home")
      * @return Response
      */
     public function index (CandidatRepository $repo): Response {
