@@ -60,6 +60,10 @@ class User implements UserInterface
         return (string) $this->email;
     }
 
+    public function getRole() {
+        return $this->getRoles();
+    }
+
     /**
      * @see UserInterface
      */

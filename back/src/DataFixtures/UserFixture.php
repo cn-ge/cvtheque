@@ -35,5 +35,14 @@ class UserFixture extends Fixture
         $manager->persist($admin);
         $manager->flush();
         $manager->clear(User::class);
+
+        $hr = new User();
+        $hr->setRoles(['ROLE_HR']);
+        $hr->setEmail('hr@hr.fr');
+        $password = 'hr';
+        $hr->setPassword($this->encoder->encodePassword($hr, $password));
+        $manager->persist($hr);
+        $manager->flush();
+        $manager->clear(User::class);
     }
 }
