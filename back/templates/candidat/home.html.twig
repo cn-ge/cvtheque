@@ -1,26 +1,24 @@
 
 {% extends 'base.html.twig' %}
 {% block title %}Wemoov - CVthèque{% endblock %}
+
+{% block menu %}
+
+<li class="nav-item active">
+    <a class="nav-link" href="#">Mettre à jour mon profil</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="#">Mon CV Vidéo</a>
+    {# <a href="http://play.google.com/store/apps/details?id=">Enregistrer mon CV video</a> #}
+</li>
+
+
+{% endblock %}
+
 {% block body %}
-
-
-
-<div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-            <a class="nav-link" href="#">TODO</a>
-            {# <a class="nav-link {% if (current_menu is defined) and (current_menu  == 'candidat') %} active {% endif %}" href="{{ path('hr.candidat.list')}}">Candidats<span class="sr-only">(current)</span></a> #}
-        </li>
-    </ul>
-</div>
-</nav>
-
 
 <div class="jumbotron text-center">
     <h1>Bienvenue sur votre profil candidat de Wemoov</h1>
 </div>
 
-<div class="container">
-    
-</div>
 {% endblock %}
