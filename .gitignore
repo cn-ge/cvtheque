@@ -1,19 +1,18 @@
-
-###> symfony/framework-bundle ###
+### SYMFONY ###
 /back/.env
 /back/.env.local
 /back/.env.local.php
 /back/.env.*.local
-/back/public/bundles/
-/back/var/
-/back/vendor/
-###< symfony/framework-bundle ###
+/back/public/bundles/*
+/back/var/*
+/back/vendor/*
+
+### REACT ###
+/front/node_modules/
+
 
 /old
 /sf4.zip
 /.docker/.DS_Store
 /.docker/config/.DS_Store
 
-
-### REACT ###
-/front/node_modules/
