@@ -15,7 +15,7 @@ RECUPERER LES VARIABLES D'ENVIRONNEMENT :
 $ docker-machine env default
 export DOCKER_TLS_VERIFY="1"
 export DOCKER_HOST="tcp://192.168.99.101:2376"
-export DOCKER_CERT_PATH="/Users/cgeindreau/.docker/machine/machines/default"
+export DOCKER_CERT_PATH="/Users/name/.docker/machine/machines/default"
 export DOCKER_MACHINE_NAME="default"
 
 CREER LES VARIABLES D'ENVIRONNEMENT :
