@@ -1,12 +1,12 @@
 
 ###> symfony/framework-bundle ###
-/sf4/.env
-/sf4/.env.local
-/sf4/.env.local.php
-/sf4/.env.*.local
-/sf4/public/bundles/
-/sf4/var/
-/sf4/vendor/
+/back/.env
+/back/.env.local
+/back/.env.local.php
+/back/.env.*.local
+/back/public/bundles/
+/back/var/
+/back/vendor/
 ###< symfony/framework-bundle ###
 
 /old
@@ -16,4 +16,4 @@
 
 
 ### REACT ###
-/react/node_modules/*
+/react/node_modules/
