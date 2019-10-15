@@ -41,6 +41,10 @@ class CandidatRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * @return Candidat[] <tableau des candidats>
+     */
     public function findLatest() : array {
         return $this->getQuery()
             ->orderBy('c.date_creation', 'DESC')
@@ -49,49 +53,30 @@ class CandidatRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    private function update($id): bool {
-        return false;
+    /**
+     * @return Candidat <candidat>
+     */
+    private function findById($id): Candidat {
+        return $this->getQuery()
+            ->andWhere('c.id =:id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
-    private function insert($candidat) : bool {
-        return false;
+    /**
+     * @return Candidat <candidat>
+     */
+    private function findByName($nom): Candidat {
+        return $this->getQuery()
+            ->andWhere('c.nom =:nom')
+            ->setParameter('nom', $nom)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
-
-    private function delete($id) : bool {
-        return false;
-    }
-
 
     private function getQuery(): QueryBuilder {
         return $this->createQueryBuilder('c');
     }
 
-    // /**
-    //  * @return Candidat[] Returns an array of Candidat objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Candidat
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

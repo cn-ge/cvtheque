@@ -1,5 +1,13 @@
 {% extends 'base.html.twig' %}
-{% block title %}{{candidat.slug}}{% endblock %}
+{% block title %}
+{{candidat.slug}}
+{% endblock %}
+
+
+{% block menu %}
+{{ include ("humanRessources/menu.html.twig") }}
+{% endblock %}
+
 {% block body %}
 <div class="container mt-4">
 

@@ -114,11 +114,13 @@ class Candidat
     private $adresse_2;
 
     /**
-     * @ORM\Column(type="blob", nullable=true)
+     * @ORM\Column(type="string", length=4000, nullable=true)
      * @Assert\Length(min=10)
      */
     private $notes;
 
+
+    private $formations;
 
     function __construct()
     {
@@ -182,6 +184,11 @@ class Candidat
     public function getCivilite(): ?int
     {
         return $this->civilite;
+    }
+
+    public function getFormattedCivilite(): ?string
+    {
+        return self::CIVILITE[$this->getCivilite()];
     }
 
     public function setCivilite(int $civilite): self
@@ -248,6 +255,9 @@ class Candidat
         return $this->date_naissance;
     }
 
+    public function getFormattedDateNaissance() : string {
+        return date_format($this->date_naissance, 'd/m/Y H:i');
+    }
     public function setDateNaissance(\DateTimeInterface $date_naissance): self
     {
         $this->date_naissance = $date_naissance;
@@ -309,15 +319,31 @@ class Candidat
         return $this;
     }
 
-    public function getNotes()
+    public function getNotes(): ?string
     {
         return $this->notes;
     }
 
-    public function setNotes($notes): self
+    public function setNotes(string $notes): self
     {
         $this->notes = $notes;
         return $this;
     }
 
+    public function getAge(): ?string
+    {
+        $now = new \Datetime('now');
+        return $now->diff($this->date_naissance)->format("%Y");
+    }
+
+    public function getFirstLetter(): ?string
+    {
+        return substr($this->nom, 0, 1) . '.';
+    }
+
+    public function getFormations(): ?array {
+        $formations = $this->getDoctrine()
+        ->getRepository(Formation::class)
+        ->findByCandidat($this->id);
+    }
 }
