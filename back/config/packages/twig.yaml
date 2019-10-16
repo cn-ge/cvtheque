@@ -4,3 +4,13 @@ twig:
     strict_variables: '%kernel.debug%'
     form_themes: ['bootstrap_4_layout.html.twig']
     exception_controller: App\Controller\error\ExceptionController::notFound
+    globals:
+        entreprise_name: '%env(ENTREPRISE_NAME)%'
+        entreprise_website: '%env(ENTREPRISE_WEBSITE)%'
+        entreprise_address1: '%env(ENTREPRISE_ADDRESS_1)%'
+        entreprise_address2: '%env(ENTREPRISE_ADDRESS_2)%'
+        entreprise_address3: '%env(ENTREPRISE_ADDRESS_3)%'
+        entreprise_tel: '%env(ENTREPRISE_TEL)%'
+        entreprise_commercial: '%env(ENTREPRISE_COMMERCIAL)%'
+        entreprise_commercial_tel: '%env(ENTREPRISE_COMMERCIAL_TEL)%'
+        entreprise_commercial_email: '%env(ENTREPRISE_COMMERCIAL_EMAIL)%'

@@ -11,6 +11,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController{
 
 
+    const TEMPLATE_HOME_PATH        = "humanRessources/home.html.twig";
+
     private $current_menu = 'home';
     private $current_role = 'hr';
 
@@ -31,6 +33,6 @@ class HomeController extends AbstractController{
      */
     public function index (CandidatRepository $repo): Response {
         $candidats = $repo->findLatest();
-        return new Response($this->twig->render('humanRessources/home.html.twig', ['candidats' => $candidats, 'current_menu' => $this->current_menu, 'current_role' => $this->current_role]));
+        return new Response($this->twig->render(self::TEMPLATE_HOME_PATH, ['candidats' => $candidats, 'current_menu' => $this->current_menu, 'current_role' => $this->current_role]));
     }
 }

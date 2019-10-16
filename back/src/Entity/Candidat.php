@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -114,15 +116,20 @@ class Candidat
     private $adresse_2;
 
     /**
-     * @ORM\Column(type="blob", nullable=true)
+     * @ORM\Column(type="string", length=4000, nullable=true)
      * @Assert\Length(min=10)
      */
     private $notes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Formation", mappedBy="candidat",cascade={"persist"})
+     */
+    private $formations;
 
     function __construct()
     {
         $this->date_creation = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+        $this->formations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -182,6 +189,11 @@ class Candidat
     public function getCivilite(): ?int
     {
         return $this->civilite;
+    }
+
+    public function getFormattedCivilite(): ?string
+    {
+        return self::CIVILITE[$this->getCivilite()];
     }
 
     public function setCivilite(int $civilite): self
@@ -248,6 +260,9 @@ class Candidat
         return $this->date_naissance;
     }
 
+    public function getFormattedDateNaissance() : string {
+        return date_format($this->date_naissance, 'd/m/Y H:i');
+    }
     public function setDateNaissance(\DateTimeInterface $date_naissance): self
     {
         $this->date_naissance = $date_naissance;
@@ -309,15 +324,56 @@ class Candidat
         return $this;
     }
 
-    public function getNotes()
+    public function getNotes(): ?string
     {
         return $this->notes;
     }
 
-    public function setNotes($notes): self
+    public function setNotes(string $notes): self
     {
         $this->notes = $notes;
         return $this;
     }
 
+    public function getAge(): ?string
+    {
+        $now = new \Datetime('now');
+        return $now->diff($this->date_naissance)->format("%Y");
+    }
+
+    public function getFirstLetter(): ?string
+    {
+        return substr($this->nom, 0, 1) . '.';
+    }
+
+    /**
+     * @return Collection|Formation[]
+     */
+    public function getFormations(): Collection
+    {
+        return $this->formations;
+    }
+
+    public function addFormation(Formation $formation): self
+    {
+        if (!$this->formations->contains($formation)) {
+            $this->formations[] = $formation;
+            $formation->setCandidat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFormation(Formation $formation): self
+    {
+        if ($this->formations->contains($formation)) {
+            $this->formations->removeElement($formation);
+            // set the owning side to null (unless already changed)
+            if ($formation->getCandidat() === $this) {
+                $formation->setCandidat(null);
+            }
+        }
+
+        return $this;
+    }
 }
