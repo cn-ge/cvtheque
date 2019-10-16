@@ -38,13 +38,28 @@
                 <div class="candidat-resume">{{ candidat.age }} ans, xx ans d'expérience</p></div>
             </div>
 
-            <div class="formation">
+            <div>
                 <div class="categorie">Formations / Diplômes</div>
-                        {% for formation in candidat.formations %}
-                            <li>{{ formation.diplome }}</li>
-                        {% endfor %}
-                <div class="categorie-formation">
-                </div>
+                <table class="formation" style="width: 100%;">
+                    <tr class="formation-border">
+                        <th class="formation-border formation-header">Années</th>
+                        <th class="formation-border formation-header">Formations / Diplômes</th>
+                    </tr>
+                    {% for formation in candidat.formations %}
+                    <tr class="formation-border">
+                        <td class="formation-border">
+                            <p class="formation-annee">{{ formation.annee }}</p>
+                        </td>
+                        <td class="formation-border">
+                            <div class="formation-label">
+                                <div class="formation-diplome">{{ formation.diplome }} - {{ formation.formattedNiveau }}</div>
+                                <div class="formation-alternance">{% if formation.alternance %} Alternance {% endif %}</div>
+                            </div>
+                            <div class="formation-ecole">{{ formation.ecole }} {% if formation.ville %} ({{formation.ville}}) {% endif %}</div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
             </div>
 
             <div class="competences">

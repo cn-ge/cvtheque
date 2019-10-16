@@ -11,12 +11,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Formation
 {
     const NIVEAU = [
-        0 => 'Bac+5',
-        1 => 'Bac+4',
-        2 => 'Bac+3',
-        3 => 'Bac+2',
-        4 => 'Bac',
-        5 => 'Autres'
+            0 => 'Bac+5',
+            1 => 'Bac+4',
+            2 => 'Bac+3',
+            3 => 'Bac+2',
+            4 => 'Bac',
+            5 => 'Autres'
     ];
 
     /**
@@ -27,10 +27,11 @@ class Formation
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Candidat", inversedBy="formations",cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $candidat;
-
+    
     /**
      * @ORM\Column(type="string", length=4)
      * @Assert\Regex("/^[0-9]{4}$/")
@@ -67,20 +68,19 @@ class Formation
      */
     private $niveau;
 
-
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCandidatId(): ?int
+    public function getCandidat(): ?Candidat
     {
-        return $this->candidat_id;
+        return $this->candidat;
     }
 
-    public function setCandidatId(int $candidat_id): self
+    public function setCandidat(?Candidat $candidat): self
     {
-        $this->candidat_id = $candidat_id;
+        $this->candidat = $candidat;
 
         return $this;
     }
@@ -166,5 +166,10 @@ class Formation
     {
         $this->niveau = $niveau;
         return $this;
+    }
+
+    public function getFormattedNiveau(): ?string
+    {
+        return self::NIVEAU[$this->niveau];
     }
 }

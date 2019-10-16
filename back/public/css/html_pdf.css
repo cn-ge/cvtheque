@@ -3,10 +3,6 @@
   --red: #F45F4D;
 }
 
-element {
-  color: var(--main-bg-color);
-}
-
 body {
   /* font-family: "Open Sans", Helvetica, Arial, sans-serif; */
   font-family: Avenir, Verdana, Calibri;
@@ -24,8 +20,6 @@ body {
 }
 
 .header .entreprise-logo {
-  /* display: table-cell;
-  width: 34%; */
   position: fixed;
   top: 20px;
   left: 20px;
@@ -76,10 +70,66 @@ body {
 
 .categorie {
   margin-top: 10px;
-  border-bottom: var(--blue) solid 1px;
+  border-bottom: rgba(103,126,199, .5) solid 5px;
   font-size: 20px;
   font-weight: bold;
   text-transform: uppercase;
+}
+
+/* ---------------- FORMATION ---------------- */
+
+.formation {
+  margin-top: 10px;
+  border: grey solid 1px;
+  border-collapse: collapse;
+}
+.formation-header {
+  text-transform: uppercase;
+  padding: 5px; 
+  color: white !important;
+  background-color: var(--blue) !important;
+  border: grey solid 1px;
+  border-collapse: collapse;
+}
+.formation-border {
+  border: grey solid 0.5px;
+  border-collapse: collapse;
+}
+
+.formation-annee{
+  text-align: center;
+}
+
+.formation-label{
+  padding-left: 5px;
+  display: table;
+  margin: 0;
+  width: 100%;
+}
+
+.formation-diplome{
+  padding-left: 5px;
+  display: table-cell;
+  font-weight: bold;
+  margin: 0;
+  width: 90%;
+}
+
+.formation-alternance{
+  padding-right: 5px;
+  display: table-cell;
+  font-style: italic;
+  text-align: right;
+  font-size: 10pt;
+  color: grey;
+  width: 10%;
+}
+
+.formation-ecole{
+  padding-left: 5px;
+  font-style: italic;
+  margin: 0;
+  width: 100%;
 }
 
 /* ---------------- LINK ---------------- */

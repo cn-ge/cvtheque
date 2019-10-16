@@ -20,13 +20,19 @@ Candidats
         <thead>
             <tr>
                 <th>Candidats</th>
-                <th>Actions</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             {% for candidat in candidats %}
             <tr>
                 <td>{{ candidat.nom }} {{ candidat.prenom }}</td>
+                <td>{{ candidat.titre }}</td>
+                <td>{{ candidat.cp }}</td>
+                <td>{{ candidat.ville }}</td>
                 <td>
                     <a class="btn btn-primary" href="{{ path('hr.candidat.edit', {slug: candidat.slug, id: candidat.id} ) }}" role="button">Editer</a>
                     <form style="display: inline-block" method="post" onsubmit="return confirm('Confirmez-vous la suppression du candidat ?')" action="{{ path('hr.candidat.delete', {id: candidat.id} ) }}">
@@ -40,6 +46,9 @@ Candidats
             {% endfor %}
         </tbody>
     </table>
+    <div class="pagination">
+        {{ knp_pagination_render(candidats) }}
+    </div>
     <a class="btn btn-primary" href="{{ path('hr.candidat.add', {current_role:'hr', current_menu:'candidat'} ) }}" role="button">Ajouter un candidat</a>
 </div>
 {% endblock %}

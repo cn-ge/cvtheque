@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -119,12 +121,15 @@ class Candidat
      */
     private $notes;
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Formation", mappedBy="candidat",cascade={"persist"})
+     */
     private $formations;
 
     function __construct()
     {
         $this->date_creation = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+        $this->formations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -341,9 +346,34 @@ class Candidat
         return substr($this->nom, 0, 1) . '.';
     }
 
-    public function getFormations(): ?array {
-        $formations = $this->getDoctrine()
-        ->getRepository(Formation::class)
-        ->findByCandidat($this->id);
+    /**
+     * @return Collection|Formation[]
+     */
+    public function getFormations(): Collection
+    {
+        return $this->formations;
+    }
+
+    public function addFormation(Formation $formation): self
+    {
+        if (!$this->formations->contains($formation)) {
+            $this->formations[] = $formation;
+            $formation->setCandidat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFormation(Formation $formation): self
+    {
+        if ($this->formations->contains($formation)) {
+            $this->formations->removeElement($formation);
+            // set the owning side to null (unless already changed)
+            if ($formation->getCandidat() === $this) {
+                $formation->setCandidat(null);
+            }
+        }
+
+        return $this;
     }
 }

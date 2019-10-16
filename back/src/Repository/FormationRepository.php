@@ -7,10 +7,10 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method Formation|null find($id, $lockMode = null, $lockVersion = null)
- * @method Formation|null findOneBy(array $criteria, array $orderBy = null)
- * @method Formation[]    findAll()
- * @method Formation[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Formations|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Formations|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Formations[]    findAll()
+ * @method Formations[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class FormationRepository extends ServiceEntityRepository
 {
@@ -19,19 +19,8 @@ class FormationRepository extends ServiceEntityRepository
         parent::__construct($registry, Formation::class);
     }
 
-
-    public function findByCandidat($id_candidat) : array {
-
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.candidat_id = :val')
-            ->setParameter('val', $id_candidat)
-            ->orderBy('f.annee', 'DESC')
-            ->getQuery()
-            ->getResult();
-    }
-
     // /**
-    //  * @return Formation[] Returns an array of Formation objects
+    //  * @return Formations[] Returns an array of Formations objects
     //  */
     /*
     public function findByExampleField($value)
@@ -48,7 +37,7 @@ class FormationRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Formation
+    public function findOneBySomeField($value): ?Formations
     {
         return $this->createQueryBuilder('f')
             ->andWhere('f.exampleField = :val')

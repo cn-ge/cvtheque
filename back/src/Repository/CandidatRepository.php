@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Candidat;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 
 /**
@@ -21,12 +22,12 @@ class CandidatRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Candidat[] <tableau des candidats>
+     * @return Query 
      */
-    public function findAll() : array {
+    public function findAll() : Query {
         return $this->getQuery()
-            ->getQuery()
-            ->getResult();
+            ->getQuery();
+            // ->getResult();
     }
 
     /**

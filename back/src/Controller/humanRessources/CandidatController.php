@@ -2,7 +2,7 @@
 
 namespace App\Controller\humanRessources;
 
-
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -49,8 +49,13 @@ class CandidatController  extends AbstractController {
      * @Route("/human-ressources/candidats", name="hr.candidat.list")
      * @return Response
      */
-    public function list(): Response {
-        $candidats = $this->repo->findAll();
+    public function list(PaginatorInterface $paginator, Request $request): Response {
+        $candidats = $paginator->paginate(
+            $this->repo->findAll(),
+            $request->query->getInt('page', 1),
+            8
+        );    
+        // $candidats = $this->repo->findAll();
         return $this->render(self::TEMPLATE_LIST_PATH, ['candidats' => $candidats, 'menu' => self::MENU]);
     }
 
