@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Candidat;
+use App\Entity\CandidatSearch;
+use App\Form\CandidatSearchType;
 use App\Form\CandidatType;
 use App\Repository\CandidatRepository;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -50,13 +52,22 @@ class CandidatController  extends AbstractController {
      * @return Response
      */
     public function list(PaginatorInterface $paginator, Request $request): Response {
+
+        $search = new CandidatSearch();
+        $form = $this->createForm(CandidatSearchType::class, $search);
+        $form->handleRequest($request);
+
         $candidats = $paginator->paginate(
-            $this->repo->findAll(),
+            $this->repo->findAllCandidats($search),
             $request->query->getInt('page', 1),
             8
         );    
         // $candidats = $this->repo->findAll();
-        return $this->render(self::TEMPLATE_LIST_PATH, ['candidats' => $candidats, 'menu' => self::MENU]);
+        return $this->render(self::TEMPLATE_LIST_PATH, [
+            'candidats' => $candidats,
+            'menu' => self::MENU,
+            'form' => $form->createView()
+        ]);
     }
 
     /**

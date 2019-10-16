@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Candidat;
+use App\Entity\CandidatSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query;
@@ -24,11 +25,21 @@ class CandidatRepository extends ServiceEntityRepository
     /**
      * @return Query 
      */
-    public function findAll() : Query {
-        return $this->getQuery()
-            ->getQuery();
-            // ->getResult();
+    public function findAllCandidats(CandidatSearch $search) : Query {
+        $query = $this->getQuery();
+        if ( null !== $search->getCp() && (strlen($search->getCp()) > 0)) { 
+            $query = $query
+                        ->andWhere('c.cp LIKE :cp')
+                        ->setParameter('cp', $search->getCp().'%');
+        }
+        if ( null !== $search->getNom() && (strlen($search->getNom()) > 0)) { 
+            $query = $query
+                        ->andWhere('c.nom LIKE :nom')
+                        ->setParameter('nom', '%'.$search->getNom().'%');
+        }
+        return $query->getQuery();
     }
+
 
     /**
      * @return Candidat[] <tableau des candidats>
