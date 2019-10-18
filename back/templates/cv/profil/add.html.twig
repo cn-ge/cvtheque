@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+Candidat
+{% endblock %}
+
+
+{% block menu %}
+{{ include ("users/menu.html.twig") }}
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+
+    <h1>Nouveau candidat</h1>
+
+    {{ include('humanRessources/candidat/cvForm.html.twig', {form: form}) }}
+
+</div>
+{% endblock %}

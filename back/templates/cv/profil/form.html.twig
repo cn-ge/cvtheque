@@ -1,0 +1,43 @@
+
+    {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-2">{{ form_row(form.civilite) }}</div>
+            <div class="col-md-3">{{ form_row(form.nom) }}</div>
+            <div class="col-md-3">{{ form_row(form.prenom) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">{{ form_row(form.statut) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">{{ form_row(form.poste_recherche) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">{{ form_row(form.telephone) }}</div>
+            <div class="col-md-4">{{ form_row(form.email) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">{{ form_row(form.adresse_1) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">{{ form_row(form.adresse_2) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">{{ form_row(form.cp) }}</div>
+            <div class="col-md-6">{{ form_row(form.ville) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">{{ form_row(form.mobilite) }}</div>
+            <div class="col-md-7">{{ form_row(form.mobilite_zone) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">{{ form_row(form.notes) }}</div>
+        </div>
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-primary">Sauvegarder</button>
+        {% if is_granted('ROLE_HR') %}
+            <a class="btn btn-primary" href="{{ path('profil.list') }}" role="button">Annuler</a>
+        {% else %}
+            <a class="btn btn-primary" href="{{ path('candidat.home') }}" role="button">Annuler</a>
+        {% endif %}
+    {{ form_end(form) }}
+

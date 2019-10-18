@@ -55,6 +55,16 @@ class CandidatRepository extends ServiceEntityRepository
     }
 
     /**
+     * @return Candidat <Candidat>
+     */
+    public function findByEmail($value) : array {
+        return $this->getQuery()
+            ->andWhere('c.email = :email')
+            ->setParameter('email', $value)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+    /**
      * @return Candidat[] <tableau des candidats>
      */
     public function findLatest() : array {

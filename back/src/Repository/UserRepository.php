@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Entity\UserSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +22,55 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return User|null Returns an array of User objects
+     */
+    public function findByEmail($value): User
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
+            ->andWhere('u.email = :val')
             ->setParameter('val', $value)
             ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
+            ->setMaxResults(1)
             ->getQuery()
-            ->getResult()
+            ->getOneOrNullResult();
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?User
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+    /**
+     * @return Query 
+     */
+    public function findAllCandidats(UserSearch $search) : Query {
+        $query = $this->getQuery()
+            ->andWhere('u.roles LIKE :role')
+            ->setParameter('role', '%ROLE_USER%');
+        if ( null !== $search->getCp() && (strlen($search->getCp()) > 0)) { 
+            $query = $query
+                        ->andWhere('u.cp LIKE :cp')
+                        ->setParameter('cp', $search->getCp().'%');
+        }
+        if ( null !== $search->getNom() && (strlen($search->getNom()) > 0)) { 
+            $query = $query
+                        ->andWhere('u.nom LIKE :nom')
+                        ->setParameter('nom', '%'.$search->getNom().'%');
+        }
+        return $query->getQuery();
     }
-    */
+
+    private function getQuery(): QueryBuilder {
+        return $this->createQueryBuilder('u');
+    }
+
+    /**
+     * @return User[] <tableau des candidats>
+     */
+    public function findLatest() : array {
+        return $this->getQuery()
+            ->andWhere('u.roles LIKE :role')
+            ->setParameter('role', '%ROLE_USER%')
+            ->orderBy('u.date_creation', 'DESC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult();
+    }
 }

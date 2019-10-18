@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+Wemoov
+{% endblock %}
+{% block body %}
+
+<div class="container mt-4">
+
+    <h1>Créer un compte</h1>
+
+    <br />
+    {{ form_start(form) }}
+
+        <div id="user" class="show" >
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('register') }}" />
+            {{ form_row(form.email) }}
+            {{ form_row(form.plainPassword) }}
+            <div onclick="toggle('user', 'candidat')" class="col-md-2 btn btn-primary">Suivant</div>
+            <a href="{{ path('login') }}" class="col-md-2 btn btn-secondary">Annuler</a>
+        </div>
+    
+        <div id="candidat" style="display:none;" >
+            <div class="row">
+                <div class="col-md-2">{{ form_row(form.civilite) }}</div>
+                <div class="col-md-3">{{ form_row(form.nom) }}</div>
+                <div class="col-md-3">{{ form_row(form.prenom) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">{{ form_row(form.statut) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">{{ form_row(form.poste_recherche) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">{{ form_row(form.telephone) }}</div>
+                <div class="col-md-4">{{ form_row(form.email) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">{{ form_row(form.adresse_1) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">{{ form_row(form.adresse_2) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">{{ form_row(form.cp) }}</div>
+                <div class="col-md-6">{{ form_row(form.ville) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-1">{{ form_row(form.mobilite) }}</div>
+                <div class="col-md-7">{{ form_row(form.mobilite_zone) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">{{ form_row(form.date_naissance) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">{{ form_row(form.notes) }}</div>
+            </div>
+            <button type="submit" class="col-md-2 offset-md-4 btn btn-primary">Enregistrer</button>
+            <a href="{{ path('login') }}" class="col-md-2 btn btn-secondary">Annuler</a>
+        </div>
+
+    {{ form_end(form) }}
+{% endblock %}
+{% block javascripts %}
+<script>
+    function toggle(mask, display) {
+        document.getElementById(mask).style.display = 'none';
+        document.getElementById(display).style.display = 'block';
+    }
+</script>
+{% endblock %}

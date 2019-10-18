@@ -27,7 +27,7 @@ class Formation
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Candidat", inversedBy="formations",cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="formations",cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $candidat;
@@ -73,12 +73,12 @@ class Formation
         return $this->id;
     }
 
-    public function getCandidat(): ?Candidat
+    public function getCandidat(): ?User
     {
         return $this->candidat;
     }
 
-    public function setCandidat(?Candidat $candidat): self
+    public function setCandidat(?User $candidat): self
     {
         $this->candidat = $candidat;
 
@@ -104,7 +104,7 @@ class Formation
 
     public function setDiplome(string $diplome): self
     {
-        $this->diplome = $diplome;
+        $this->diplome = strtoupper(trim($diplome));
 
         return $this;
     }
@@ -128,7 +128,7 @@ class Formation
 
     public function setEcole(string $ecole): self
     {
-        $this->ecole = $ecole;
+        $this->ecole = strtoupper(trim($ecole));
 
         return $this;
     }
@@ -140,7 +140,7 @@ class Formation
 
     public function setVille(?string $ville): self
     {
-        $this->ville = $ville;
+        $this->ville = strtoupper(trim($ville));
 
         return $this;
     }

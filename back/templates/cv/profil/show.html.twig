@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+{{ candidat.slug }}
+{% endblock %}
+
+
+
+{% block menu %}
+{{ include ("users/menu.html.twig") }}
+{% endblock %}
+
+{% block body %}
+<div class="jumbotron text-center">
+
+    <h1>{{ candidat.prenom }} {{ candidat.nom }}</h1>
+
+</div>
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-2">
+            <div>N°, créé le </div>
+            <div>Prénom, Nom</div>
+            <div>Téléphone</div>
+            <div>Email</div>
+            <div>Date de naissance</div>
+            <div>Adresse1</div>
+            <div>Adresse2</div>
+            <div>CP, ville</div>
+            <div>Titre, Poste visé</div>
+            <div>Mobilité</div>
+            <div>Notes</div>
+        </div>
+         
+        <div class="col-md-8">
+            <div>{{ candidat.id }} - {{ candidat.formattedDateCreation }}</div>
+            <div>{{ candidat.formattedCivilite }} {{ candidat.prenom }} {{ candidat.nom }}</div>
+            <div>{{ candidat.telephone }}</div>
+            <div>{{ candidat.email }}</div>
+            <div>{{ candidat.formattedDateNaissance }}</div>
+            <div>{{ candidat.adresse1 }}</div>
+            <div>{{ candidat.adresse2 }}</div>
+            <div>{{ candidat.cp }} {{ candidat.ville }}</div>
+            <div>{{ candidat.statut }} {{ candidat.posteRecherche }}</div>
+            <div>{% if candidat.mobilite %} {{ candidat.mobiliteZone }} {% else %} Non {% endif %}</div>
+            <div>{{ candidat.notes }}</div> 
+        </div> 
+    </div>
+
+    <a class="btn btn-primary" href="{{ path('profil.print', {slug: candidat.slug, id: candidat.id} ) }}" role="button" target="_blank">Visualiser<a>
+</div>
+{% endblock %}

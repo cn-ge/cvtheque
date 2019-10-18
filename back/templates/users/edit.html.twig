@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+Utilisateurs
+{% endblock %}
+
+
+{% block menu %}
+{{ include ("users/menu.html.twig") }}
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+
+    <h1>Modifier l'utilisateur {{ user.email }}</h1>
+
+    <form action="{{ path('admin.users.edit', {id: user.id } ) }}" method="POST">
+        <select name="role" id="role">
+            <option value="ROLE_ADMIN" {% if "ROLE_ADMIN" in user.roles %} selected="selected" {% endif %}>Administrateur</option>
+            <option value="ROLE_HR" {% if "ROLE_HR" in user.roles %}  selected="selected" {% endif %}>Ressources Humaines</option>
+            <option value="ROLE_USER" {% if "ROLE_USER" in user.roles %}  selected="selected" {% endif %}>Candidat</option>
+        </select>
+        <button type="submit">Enregistrer</button>
+    </form>
+
+</div>
+{% endblock %}

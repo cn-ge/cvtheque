@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+Utilisateurs
+{% endblock %}
+
+
+{% block menu %}
+{{ include ("users/menu.html.twig") }}
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+
+    <h1>Gérer les Utilisateurs</h1>
+     
+    <table class="table table-stripped">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.nom }}</td>
+                <td>{{ user.prenom }}</td>
+                <td>{{ user.email }}</td>
+                <td>{% for role in user.roles %} {{ role }} {% endfor %}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('admin.users.edit', {id: user.id} ) }}" role="button">Editer</a>
+                    <form style="display: inline-block" method="post" onsubmit="return confirm('Confirmez-vous la suppression de l'utilisateur ?')" action="{{ path('admin.users.delete', {id: user.id} ) }}">
+                        <input type="hidden" name="_method" value="DELETE" />
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}" />
+                        <button type="submit" class="btn btn-primary" >Supprimer</button>
+                    </form>
+                </td>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+
+{% extends 'base.html.twig' %}
+{% block title %}
+Wemoov - CVthèque
+{% endblock %}
+
+{% block menu %}
+{{ include ("users/menu.html.twig")  }}
+{% endblock %}
+
+
+
+{% block body %}
+<div class="jumbotron text-center">
+    <h1>Bienvenue {{ candidat.prenom }} {{ candidat.nom }}</h1>
+</div>
+<div class="container">
+    <h4>Coordonnées</h4>
+    <div>{{ candidat.adresse1 }}</div>
+    <div>{{ candidat.adresse2 }}</div>
+    <div>{{ candidat.cp }} {{ candidat.ville }}</div>
+    <br/>
+    <div>{{ candidat.telephone }} </div>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+Wemoov
+{% endblock %}
+{% block body %}
+
+<div class="container mt-4">
+
+    <h1>Connexion</h1>
+
+    <br />
+    {% if error %}
+        <div class="alert alert-danger" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+    
+    <br />
+    
+    <form action="{{ path('login') }}" method="post">
+        <div class="form-inline">
+            <label for="email" class="col-md-2 mb-1" style="justify-content: left;" >Email</label>
+            <input type="text" id="email" name="_username" class="form-control col-md-4 mb-1" value="{{ email }}" />
+        </div>
+
+        <div class="form-inline">
+            <label for="password" class="col-md-2 mb-1" style="justify-content: left;" >Mot de passe</label>
+            <input type="password" id="password" name="_password" class="form-control col-md-4 mb-1"  />
+        </div>
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+
+        <button type="submit" class="col-md-2 offset-md-2 btn btn-primary">Se connecter</button>
+        <a href="{{ path('register') }}" class="col-md-2 btn btn-secondary">Créer un compte</a>
+    </form>
+
+{% endblock %}

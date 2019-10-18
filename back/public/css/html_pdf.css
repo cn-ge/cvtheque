@@ -3,6 +3,16 @@
   --red: #F45F4D;
 }
 
+@media print { 
+  .noprint { 
+     visibility: hidden; 
+  } 
+} 
+
+.btn-print{
+  margin-top: 50px;
+}
+
 body {
   /* font-family: "Open Sans", Helvetica, Arial, sans-serif; */
   font-family: Avenir, Verdana, Calibri;

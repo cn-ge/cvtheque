@@ -1,0 +1,27 @@
+
+{# ROLE CANDIDAT #}
+{% if is_granted('ROLE_USER') and is_granted('ROLE_HR') == false %}
+<li class="nav-item">
+    <a class="nav-link {% if (menu is defined) and (menu  == 'profil') %} active {% endif %}" href="{{ path('profil.edit', {slug: app.user.Slug , id: app.user.id} ) }}">Modifier mon profil<span class="sr-only">(current)</span></a>
+<li class="nav-item">
+    <a class="nav-link {% if (menu is defined) and (menu  == 'formation') %} active {% endif %}" href="{{ path('formation.list')}}">Modifier mes formations<span class="sr-only">(current)</span></a>
+</li>
+{# <li class="nav-item">
+    <a class="nav-link {% if (menu is defined) and (menu  == 'candidat') %} active {% endif %}" href="{{ path('experience.edit')}}">Expériences scolaires<span class="sr-only">(current)</span></a>
+</li> #} 
+
+{% endif %}
+
+{# ROLE RH #}
+{% if is_granted('ROLE_HR') and is_granted('ROLE_ADMIN') == false %}
+<li class="nav-item">
+    <a class="nav-link {% if (menu is defined) and (menu  == 'profil') %} active {% endif %}" href="{{ path('profil.list')}}">Gestion des candidats<span class="sr-only">(current)</span></a>
+</li>
+{% endif %}
+
+{# ROLE ADMIN #}
+{% if is_granted('ROLE_ADMIN') %}
+<li class="nav-item">
+    <a class="nav-link {% if (menu is defined) and (menu  == 'users') %} active {% endif %}" href="{{ path('admin.users.list')}}">Gestion des utilisateurs<span class="sr-only">(current)</span></a>
+</li>
+{% endif %}

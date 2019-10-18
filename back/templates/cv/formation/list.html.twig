@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+Formation
+{% endblock %}
+
+
+{% block menu %}
+{{ include ("users/menu.html.twig") }}
+{% endblock %}
+
+{% block body %}
+    <h1>Formation index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Annee</th>
+                <th>Diplome</th>
+                <th>Obtenu</th>
+                <th>Ecole</th>
+                <th>Ville</th>
+                <th>Alternance</th>
+                <th>Niveau</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for formation in formations %}
+            <tr>
+                <td>{{ formation.id }}</td>
+                <td>{{ formation.annee }}</td>
+                <td>{{ formation.diplome }}</td>
+                <td>{{ formation.obtenu ? 'Yes' : 'No' }}</td>
+                <td>{{ formation.ecole }}</td>
+                <td>{{ formation.ville }}</td>
+                <td>{{ formation.alternance ? 'Yes' : 'No' }}</td>
+                <td>{{ formation.niveau }}</td>
+                <td>
+                    <a href="{{ path('formation.edit', {'id': formation.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('formation.add') }}">Create new</a>
+{% endblock %}

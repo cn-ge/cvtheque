@@ -1,0 +1,37 @@
+
+{% extends 'base.html.twig' %}
+{% block title %}
+Wemoov - CVthèque
+{% endblock %}
+
+
+{% block menu %}
+{{ include ("users/menu.html.twig")  }}
+{% endblock %}
+
+
+{% block body %}
+
+<div class="jumbotron text-center">
+    <h1>Bienvenue sur la CVThèque de Wemoov</h1>
+</div>
+
+<div class="container">
+    <h2>Les derniers candidats</h2>
+
+    {% for candidat in candidats %}
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="{{ path('profil.show', {id: candidat.id, slug: candidat.slug}) }}">{{ candidat.prenom }} {{ candidat.nom }}</a>
+                </h5>
+                <div class="text-primary">{{ candidat.statut }}</div>
+                <p class="text-muted" style="font-size:10px">initié le {{ candidat.formattedDateCreation }}</p>
+            </div>
+        </div>
+    </div> 
+    {% endfor %}
+    
+</div>
+{% endblock %}

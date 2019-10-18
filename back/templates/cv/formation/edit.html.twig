@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Formation{% endblock %}
+
+{% block body %}
+    <h1>Edit Formation</h1>
+
+    {{ include('cv/formation/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('formation.list') }}">Annuler</a>
+
+{% endblock %}

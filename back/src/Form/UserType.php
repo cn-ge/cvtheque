@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class CandidatType extends AbstractType
+class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -45,6 +45,23 @@ class CandidatType extends AbstractType
             ->add('notes')
             ->add('nom')
             ->add('prenom')
+            ->add('email', EmailType::class)
+            ->add('plainPassword', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'first_options' => ['label' => 'Mot de passe'],
+                'second_options' => ['label' => 'Confirmation du mot de passe'],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez renseigner ce champ',
+                    ]),
+                    new Length([
+                        'min' => 4,
+                        'minMessage' => 'Le mot de passe doit contenir au moins {{ limit }} caractères.',
+                        'max' => 4096,
+                    ]),
+                    ],
+                    'invalid_message' => 'Le mot de passe et la confirmation ne sont pas identiques.'
+            ])
        ;
     }
 
