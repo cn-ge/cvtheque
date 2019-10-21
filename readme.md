@@ -10,7 +10,7 @@ Gestion des CV (Symfony 4)
 - php7.3
 
 Exemple de virtual host :
-````
+```
 <VirtualHost *:80 *:443>
         DocumentRoot "/chemin/projet/cvtheque/back/public"
         ServerName cvtheque.local
