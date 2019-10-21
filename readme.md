@@ -5,11 +5,27 @@ Gestion des CV (Symfony 4)
 
 
 ## Prérequis
-- apache2.4 (mettre en place un virtual host)
+- apache2.4
 - mysql5.7
 - php7.3
 
+Exemple de virtual host :
+````
+<VirtualHost *:80 *:443>
+        DocumentRoot "/chemin/projet/cvtheque/back/public"
+        ServerName cvtheque.local
+        ServerAlias www.cvtheque.local
+        ErrorLog "/private/var/log/apache2/cvtheque.local-error_log"
+        CustomLog "/private/var/log/apache2/cvtheque.local-access_log" common
 
+        <Directory "/chemin/projet/cvtheque/back/public">
+            AllowOverride All
+            Order Allow,Deny
+            Allow from All
+            FallbackResource /index.php
+        </Directory>
+</VirtualHost>
+```
 
 ## Docker
 Structure prête à l'emploi
@@ -29,6 +45,10 @@ composer update
 ```
 bin/console doctrine:database:create
 bin/console doctrine:migrations:migrate
+```
+- Injecter 2 utilisateurs (administrateur & ressources humaines)
+```
+bin/console doctrine:fixtures:load
 ```
 
 ## Utilisateurs pré-injectés dans les scripts
